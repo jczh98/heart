@@ -1,0 +1,9 @@
+[submodule "external/fmt"]
+	path = external/fmt
+	url = https://github.com/fmtlib/fmt.git
+[submodule "external/glog"]
+	path = external/glog
+	url = https://github.com/google/glog.git
+[submodule "external/stb"]
+	path = external/stb
+	url = https://github.com/nothings/stb.git
