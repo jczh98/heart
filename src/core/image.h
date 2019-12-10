@@ -16,11 +16,12 @@ class Image {
  public:
   Image(int width, int height, int channel);
   bool Save(const std::string &filename, bool flip = false) const;
-  void Free() noexcept ;
+  void Free() noexcept;
   bool IsValid() const;
-  unsigned char& At(int x, int y, int channel);
-  void SetPixel(int x, int y, int r, int g, int b);
-  virtual ~Image() noexcept ;
+  unsigned char &At(int x, int y, int channel);
+  void SetPixel(int x, int y, unsigned char r, unsigned char g, unsigned char b);
+  virtual ~Image() noexcept;
+
  private:
   unsigned char *data_;
   int width_, height_, channel_;
@@ -28,4 +29,4 @@ class Image {
 };
 CHIHAYA_NAMESPACE_END
 
-#endif //CHIHAYA_SRC_CORE_IMAGE_H_
+#endif  //CHIHAYA_SRC_CORE_IMAGE_H_

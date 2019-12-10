@@ -11,10 +11,10 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 #define MAXFLOAT FLT_MAX
+#include <fmt/format.h>
+#include <algorithm>
 #include <iostream>
 #include <limits>
-
-#include <fmt/format.h>
 #include "glog/logging.h"
 #include "random.h"
 

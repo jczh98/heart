@@ -80,7 +80,7 @@ Hitable *CornellBox() {
   Material *light = new DiffuseLight(new ConstantTexture(Vector3f(15, 15, 15)));
   list[i++] = new FlipNormals(new YZrect(0, 555, 0, 555, 555, green));
   list[i++] = new YZrect(0, 555, 0, 555, 0, red);
-  list[i++] = new XZrect(113, 443, 127, 432, 554, light);
+  list[i++] = new XZrect(213, 343, 227, 332, 554, light);
 
   list[i++] = new FlipNormals(new XZrect(0, 555, 0, 555, 555, white));
   list[i++] = new XZrect(0, 555, 0, 555, 0, white);
@@ -92,7 +92,7 @@ Hitable *CornellBox() {
 int main(int argc, char *argv[]) {
   int nx = 400;
   int ny = 400;
-  int ns = 20;
+  int ns = 400;
   std::cout << "Start" << std::endl;
   chihaya::Image image(nx, ny, 3);
   //Hitable *world = RandomScene();
@@ -115,9 +115,9 @@ int main(int argc, char *argv[]) {
       std::cout << i << " " << j << std::endl;
       col /= ns;
       col = Vector3f(sqrt(col.x), sqrt(col.y), sqrt(col.z));
-      int ir = int(255.99 * col.x);
-      int ig = int(255.99 * col.y);
-      int ib = int(255.99 * col.z);
+      auto ir = static_cast<unsigned char>(255 * std::clamp(col.x, 0.0f, 1.0f));
+      auto ig = static_cast<unsigned char>(255 * std::clamp(col.y, 0.0f, 1.0f));
+      auto ib = static_cast<unsigned char>(255 * std::clamp(col.z, 0.0f, 1.0f));
       image.SetPixel(i, j, ir, ig, ib);
     }
   }

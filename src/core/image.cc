@@ -13,29 +13,21 @@
 
 CHIHAYA_NAMESPACE_BEGIN
 
-Image::Image(int width, int height, int channel) :
-    data_{nullptr} {
+Image::Image(int width, int height, int channel) : data_{nullptr} {
   Free();
   width_ = width;
   height_ = height;
   channel_ = channel;
-  data_ = (unsigned char *) malloc(width_ * height_ * channel_);
+  data_ = (unsigned char *)malloc(width_ * height_ * channel_);
 }
 
 bool Image::Save(const std::string &filename, bool flip) const {
   if (!IsValid()) return false;
   stbi_flip_vertically_on_write(flip);
-  const int val_num = width_ * height_ * channel_;
-  auto uc_data = new stbi_uc[val_num];
-  for (int i = 0; i < val_num; ++i) {
-
-    uc_data[i] = static_cast<stbi_uc>(data_[i]);
-  }
   auto rst = stbi_write_png(filename.c_str(), width_, height_, channel_, data_, width_ * channel_);
-
-  delete[] uc_data;
   return rst;
 }
+
 void Image::Free() noexcept {
   width_ = height_ = channel_ = 0;
   data_ = nullptr;
@@ -51,7 +43,7 @@ unsigned char &Image::At(int x, int y, int channel) {
   return data_[(y * width_ + x) * channel_ + channel];
 }
 
-void Image::SetPixel(int x, int y, int r, int g, int b) {
+void Image::SetPixel(int x, int y, unsigned char r, unsigned char g, unsigned char b) {
   DCHECK(channel_ == 3);
   At(x, y, 0) = r;
   At(x, y, 1) = g;
