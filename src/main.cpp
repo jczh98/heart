@@ -16,6 +16,14 @@
 
 using namespace chihaya;
 
+inline Vector3f Denan(const Vector3f &c) {
+  Vector3f temp = c;
+  if (!(temp[0] == temp[0])) temp[0] = 0;
+  if (!(temp[1] == temp[1])) temp[1] = 0;
+  if (!(temp[2] == temp[2])) temp[2] = 0;
+  return temp;
+}
+
 Vector3f color(const Ray &r, Hitable *world, int depth) {
   HitRecord rec;
   if (world->hit(r, 0.001, MAXFLOAT, rec)) {
@@ -88,14 +96,14 @@ Hitable *CornellBox() {
   list[i++] = new XZrect(0, 555, 0, 555, 0, white);
   list[i++] = new FlipNormals(new XYrect(0, 555, 0, 555, 555, white));
   //list[i++] = new Translate(new RotateY(new Box(Vector3f(0, 0, 0), Vector3f(165, 165, 165), white), -18), Vector3f(130, 0, 65));
-  list[i++] = new Heart(Vector3f(190, 90, 190), 90, glass);
+  list[i++] = new Heart(Vector3f(190, 90, 190), 90, red);
   list[i++] = new Translate(new RotateY(new Box(Vector3f(0, 0, 0), Vector3f(165, 330, 165), white), 15), Vector3f(265, 0, 295));
   return new HitableList(list, i);
 }
 int main(int argc, char *argv[]) {
   int nx = 400;
   int ny = 400;
-  int ns = 10;
+  int ns = 800;
   std::cout << "Start" << std::endl;
   chihaya::Image image(nx, ny, 3);
   //Hitable *world = RandomScene();
@@ -113,7 +121,7 @@ int main(int argc, char *argv[]) {
         Float v = Float(j + drand48()) / Float(ny);
         Ray r = camera.GetRay(u, v);
         Vector3f p = r(2);
-        col += color(r, world, 0);
+        col += Denan(color(r, world, 0));
       }
       std::cout << i << " " << j << std::endl;
       col /= ns;

@@ -8,7 +8,7 @@
 #ifndef CHIHAYA_SRC_CORE_HITABLE_H_
 #define CHIHAYA_SRC_CORE_HITABLE_H_
 
-#include "AABB.h"
+#include "aabb.h"
 #include "common.h"
 #include "ray.h"
 

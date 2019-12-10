@@ -12,7 +12,7 @@
 
 CHIHAYA_NAMESPACE_BEGIN
 
-template<typename T>
+template <typename T>
 class Vector3 {
  public:
   // Vector3 Public Methods
@@ -29,20 +29,20 @@ class Vector3 {
     return z;
   }
   Vector3() { x = y = z = 0; }
-  Vector3(T x, T y, T z) : x(x), y(y), z(z) { DCHECK(!HasNaNs()); }
+  Vector3(T x, T y, T z) : x(x), y(y), z(z) {}
   bool HasNaNs() const { return isNaN(x) || isNaN(y) || isNaN(z); }
 #ifndef NDEBUG
   // The default versions of these are fine for release builds; for debug
   // we define them so that we can add the Assert checks.
   Vector3(const Vector3<T> &v) {
-    DCHECK(!v.HasNaNs());
+    //DCHECK(!v.HasNaNs());
     x = v.x;
     y = v.y;
     z = v.z;
   }
 
   Vector3<T> &operator=(const Vector3<T> &v) {
-    DCHECK(!v.HasNaNs());
+    //DCHECK(!v.HasNaNs());
     x = v.x;
     y = v.y;
     z = v.z;
@@ -50,11 +50,11 @@ class Vector3 {
   }
 #endif  // !NDEBUG
   Vector3<T> operator+(const Vector3<T> &v) const {
-    DCHECK(!v.HasNaNs());
+    //DCHECK(!v.HasNaNs());
     return Vector3(x + v.x, y + v.y, z + v.z);
   }
   Vector3<T> &operator+=(const Vector3<T> &v) {
-    DCHECK(!v.HasNaNs());
+    //DCHECK(!v.HasNaNs());
     x += v.x;
     y += v.y;
     z += v.z;
@@ -62,16 +62,16 @@ class Vector3 {
   }
 
   Vector3<T> operator*(const Vector3<T> &v) const {
-    DCHECK(!v.HasNaNs());
+    //DCHECK(!v.HasNaNs());
     return Vector3(x * v.x, y * v.y, z * v.z);
   }
 
   Vector3<T> operator-(const Vector3<T> &v) const {
-    DCHECK(!v.HasNaNs());
+    //DCHECK(!v.HasNaNs());
     return Vector3(x - v.x, y - v.y, z - v.z);
   }
   Vector3<T> &operator-=(const Vector3<T> &v) {
-    DCHECK(!v.HasNaNs());
+    //DCHECK(!v.HasNaNs());
     x -= v.x;
     y -= v.y;
     z -= v.z;
@@ -83,29 +83,29 @@ class Vector3 {
   bool operator!=(const Vector3<T> &v) const {
     return x != v.x || y != v.y || z != v.z;
   }
-  template<typename U>
+  template <typename U>
   Vector3<T> operator*(U s) const {
     return Vector3<T>(s * x, s * y, s * z);
   }
-  template<typename U>
+  template <typename U>
   Vector3<T> &operator*=(U s) {
-    DCHECK(!isNaN(s));
+    //DCHECK(!isNaN(s));
     x *= s;
     y *= s;
     z *= s;
     return *this;
   }
-  template<typename U>
+  template <typename U>
   Vector3<T> operator/(U f) const {
     CHECK_NE(f, 0);
-    Float inv = (Float) 1 / f;
+    Float inv = (Float)1 / f;
     return Vector3<T>(x * inv, y * inv, z * inv);
   }
 
-  template<typename U>
+  template <typename U>
   Vector3<T> &operator/=(U f) {
     CHECK_NE(f, 0);
-    Float inv = (Float) 1 / f;
+    Float inv = (Float)1 / f;
     x *= inv;
     y *= inv;
     z *= inv;
@@ -119,13 +119,13 @@ class Vector3 {
   T x, y, z;
 };
 
-template<typename T>
+template <typename T>
 inline std::ostream &operator<<(std::ostream &os, const Vector3<T> &v) {
   os << "[ " << v.x << ", " << v.y << ", " << v.z << " ]";
   return os;
 }
 
-template<>
+template <>
 inline std::ostream &operator<<(std::ostream &os, const Vector3<Float> &v) {
   os << fmt::format("[ {}, {}, {} ]", v.x, v.y, v.z);
   return os;
@@ -153,19 +153,19 @@ Vector3<T> Abs(const Vector3<T> &v) {
 
 template <typename T>
 inline T Dot(const Vector3<T> &v1, const Vector3<T> &v2) {
-  DCHECK(!v1.HasNaNs() && !v2.HasNaNs());
+  //DCHECK(!v1.HasNaNs() && !v2.HasNaNs());
   return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
 }
 
 template <typename T>
 inline T AbsDot(const Vector3<T> &v1, const Vector3<T> &v2) {
-  DCHECK(!v1.HasNaNs() && !v2.HasNaNs());
+  //DCHECK(!v1.HasNaNs() && !v2.HasNaNs());
   return std::abs(Dot(v1, v2));
 }
 
 template <typename T>
 inline Vector3<T> Cross(const Vector3<T> &v1, const Vector3<T> &v2) {
-  DCHECK(!v1.HasNaNs() && !v2.HasNaNs());
+  //DCHECK(!v1.HasNaNs() && !v2.HasNaNs());
   double v1x = v1.x, v1y = v1.y, v1z = v1.z;
   double v2x = v2.x, v2y = v2.y, v2z = v2.z;
   return Vector3<T>((v1y * v2z) - (v1z * v2y), (v1z * v2x) - (v1x * v2z),
@@ -174,4 +174,4 @@ inline Vector3<T> Cross(const Vector3<T> &v1, const Vector3<T> &v2) {
 
 CHIHAYA_NAMESPACE_END
 
-#endif //CHIHAYA_SRC_CORE_VECTOR3_H_
+#endif  //CHIHAYA_SRC_CORE_VECTOR3_H_

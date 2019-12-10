@@ -39,11 +39,11 @@ const double inf = 1e12;
 //  }
 //}
 
-std::vector<double> PrepareCoef(Vector3f o, Vector3f d, int n) {
+std::vector<double> PrepareCoef(Vector3f o, Vector3f d, float r, int n) {
   std::vector<double> coef(n + 1);
-  coef[0] = Dot(o, o) - 1;
-  coef[1] = 2 * Dot(o, d);
-  coef[2] = Dot(d, d);
+  coef[0] = Dot(o, o) / (r * r) - 1;
+  coef[1] = 2 * Dot(o, d) / (r * r);
+  coef[2] = Dot(d, d) / (r * r);
   return coef;
 }
 inline int sign(double x) {
@@ -92,15 +92,12 @@ std::vector<double> Solve(std::vector<double> coef, int n) {
 }
 bool Heart::hit(const Ray &r, Float t_min, Float t_max, HitRecord &rec) const {
   Vector3f oc = r.o - center;
-  oc = oc / scaled;
-  Vector3f od = r.d;
-  od = od / scaled;
-  auto coef = PrepareCoef(oc, od, 2);
+  auto coef = PrepareCoef(oc, r.d, scaled, 2);
   auto ans = Solve(coef, 2);
   std::sort(ans.begin(), ans.end());
   for (auto x : ans) {
-    if (x * scaled > t_min && x * scaled < t_max) {
-      rec.t = x * scaled;
+    if (x > t_min && x < t_max) {
+      rec.t = x;
       rec.p = r(rec.t);
       rec.normal = Normalize(rec.p - center);
       rec.mat_ptr = mat_ptr;
@@ -122,7 +119,7 @@ bool Heart::hit(const Ray &r, Float t_min, Float t_max, HitRecord &rec) const {
 }
 
 bool Heart::BoundingBox(float t0, float t1, AABB &box) const {
-  box = AABB(center - 0.1 * Vector3f(scaled, scaled, scaled), center + 0.1 * Vector3f(scaled, scaled, scaled));
+  box = AABB(center - Vector3f(scaled, scaled, scaled), center + Vector3f(scaled, scaled, scaled));
   return true;
 }
 

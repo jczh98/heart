@@ -9,8 +9,11 @@
 #define CHIHAYA_SRC_CORE_COMMON_H_
 
 #define _USE_MATH_DEFINES
+#include <cfloat>
 #include <cmath>
+#ifndef MAXFLOAT
 #define MAXFLOAT FLT_MAX
+#endif
 #include <fmt/format.h>
 #include <algorithm>
 #include <iostream>
