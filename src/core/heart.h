@@ -15,10 +15,11 @@ CHIHAYA_NAMESPACE_BEGIN
 
 class Heart : public Hitable {
  public:
-  Heart(Vector3f center, Material *m) : center(center), mat_ptr(m) {
+  Heart(Vector3f center, float r, Material *m) : center(center), scaled(r), mat_ptr(m) {
   }
   virtual bool hit(const Ray &r, Float t_min, Float t_max, HitRecord &rec) const;
   virtual bool BoundingBox(float t0, float t1, AABB &box) const;
+  float scaled;
   Vector3f center;
   Material *mat_ptr;
 };

@@ -5,6 +5,7 @@
 #include "core/box.h"
 #include "core/camera.h"
 #include "core/common.h"
+#include "core/heart.h"
 #include "core/hitable_list.h"
 #include "core/image.h"
 #include "core/material.h"
@@ -78,6 +79,7 @@ Hitable *CornellBox() {
   Material *white = new Lambertian(new ConstantTexture(Vector3f(0.73, 0.73, 0.73)));
   Material *green = new Lambertian(new ConstantTexture(Vector3f(0.12, 0.45, 0.15)));
   Material *light = new DiffuseLight(new ConstantTexture(Vector3f(15, 15, 15)));
+  Material *glass = new Dielectric(1.5);
   list[i++] = new FlipNormals(new YZrect(0, 555, 0, 555, 555, green));
   list[i++] = new YZrect(0, 555, 0, 555, 0, red);
   list[i++] = new XZrect(213, 343, 227, 332, 554, light);
@@ -85,14 +87,15 @@ Hitable *CornellBox() {
   list[i++] = new FlipNormals(new XZrect(0, 555, 0, 555, 555, white));
   list[i++] = new XZrect(0, 555, 0, 555, 0, white);
   list[i++] = new FlipNormals(new XYrect(0, 555, 0, 555, 555, white));
-  list[i++] = new Translate(new RotateY(new Box(Vector3f(0, 0, 0), Vector3f(165, 165, 165), white), -18), Vector3f(130, 0, 65));
+  //list[i++] = new Translate(new RotateY(new Box(Vector3f(0, 0, 0), Vector3f(165, 165, 165), white), -18), Vector3f(130, 0, 65));
+  list[i++] = new Heart(Vector3f(190, 90, 190), 90, glass);
   list[i++] = new Translate(new RotateY(new Box(Vector3f(0, 0, 0), Vector3f(165, 330, 165), white), 15), Vector3f(265, 0, 295));
   return new HitableList(list, i);
 }
 int main(int argc, char *argv[]) {
   int nx = 400;
   int ny = 400;
-  int ns = 400;
+  int ns = 10;
   std::cout << "Start" << std::endl;
   chihaya::Image image(nx, ny, 3);
   //Hitable *world = RandomScene();
