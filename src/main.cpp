@@ -103,7 +103,7 @@ Hitable *CornellBox() {
 int main(int argc, char *argv[]) {
   int nx = 400;
   int ny = 400;
-  int ns = 800;
+  int ns = 40;
   std::cout << "Start" << std::endl;
   chihaya::Image image(nx, ny, 3);
   //Hitable *world = RandomScene();
